@@ -2,7 +2,6 @@
 import pandas as pd
 import numpy as np
 
-print("hello world")
 # LabelEncoder digunakan untuk mengubah data teks menjadi angka
 # StandardScaler digunakan untuk menyamakan skala data
 from sklearn.preprocessing import LabelEncoder, StandardScaler
