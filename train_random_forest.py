@@ -23,10 +23,13 @@ import seaborn as sns
 
 print("===== IMPORT DATASET =====")
 
-df = pd.read_csv("Sleep_health_and_lifestyle_dataset.csv")
-
+df = pd.read_csv(
+    "Sleep_health_and_lifestyle_dataset.csv",
+    keep_default_na=False
+)
 print("Jumlah data:", df.shape)
-
+print("\n===== CEK TARGET =====")
+print(df["Sleep Disorder"].value_counts(dropna=False))
 
 # 3. PREPROCESSING SINGKAT
 
@@ -256,3 +259,4 @@ print("feature_importance.png")
 # ============================================
 
 print("\nCheckpoint 4 selesai")
+print(target_encoder.classes_)
