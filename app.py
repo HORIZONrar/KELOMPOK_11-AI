@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 
-# ==========================
 # LOAD MODEL DAN FILE
-# ==========================
 
 with open("random_forest_model.pkl", "rb") as file:
     model = pickle.load(file)
@@ -21,15 +19,27 @@ with open("bmi_encoder.pkl", "rb") as file:
 with open("target_encoder.pkl", "rb") as file:
     target_encoder = pickle.load(file)
 
-# ==========================
 # TAMPILAN WEBSITE
-# ==========================
 
-st.title("Sleep Disorder Prediction")
+st.title("Sleep Disorder Prediction System")
 
 st.write(
-    "Masukkan data kesehatan dan gaya hidup untuk "
-    "melakukan prediksi gangguan tidur."
+    """
+    Aplikasi ini digunakan untuk memprediksi
+    kemungkinan gangguan tidur berdasarkan
+    data kesehatan dan gaya hidup pengguna.
+    """
+)
+
+st.write("Model : Random Forest")
+st.write("Accuracy : 96%")
+
+st.info(
+    """
+    Silakan isi data sesuai kondisi Anda.
+    Hasil prediksi hanya digunakan untuk
+    keperluan pembelajaran dan penelitian.
+    """
 )
 
 st.subheader("Input Data")
@@ -40,31 +50,34 @@ gender = st.selectbox(
 )
 
 age = st.number_input(
-    "Age",
+    "Age (1 - 100 Tahun)",
     min_value=1,
     max_value=100,
     value=25
 )
 
 sleep_duration = st.number_input(
-    "Sleep Duration",
+    "Sleep Duration (Jam)",
     min_value=0.0,
     max_value=24.0,
-    value=7.0
+    value=7.0,
+    help="Rata-rata lama tidur per hari"
 )
 
 physical_activity = st.number_input(
-    "Physical Activity Level",
+    "Physical Activity Level (0 - 100)",
     min_value=0,
     max_value=100,
-    value=50
+    value=50,
+    help="Tingkat aktivitas fisik harian"
 )
 
 stress_level = st.number_input(
-    "Stress Level",
+    "Stress Level (1 - 10)",
     min_value=1,
     max_value=10,
-    value=5
+    value=5,
+    help="1 = sangat rendah, 10 = sangat tinggi"
 )
 
 bmi_category = st.selectbox(
@@ -81,32 +94,34 @@ heart_rate = st.number_input(
     "Heart Rate",
     min_value=30,
     max_value=200,
-    value=70
+    value=70,
+    help="Detak jantung per menit"
 )
 
 daily_steps = st.number_input(
     "Daily Steps",
     min_value=0,
-    value=5000
+    value=5000,
+    help="Jumlah langkah per hari"
 )
 
 systolic = st.number_input(
     "Systolic",
     min_value=50,
     max_value=250,
-    value=120
+    value=120,
+    help="Tekanan darah sistolik"
 )
 
 diastolic = st.number_input(
     "Diastolic",
     min_value=30,
     max_value=150,
-    value=80
+    value=80,
+    help="Tekanan darah diastolik"
 )
 
-# ==========================
 # PREDIKSI
-# ==========================
 
 if st.button("Predict"):
 
@@ -141,7 +156,18 @@ if st.button("Predict"):
 
     st.subheader("Prediction Result")
 
-    st.success(
-        f"Hasil Prediksi: {result}"
-    )
+    if result == "None":
+        st.success(
+            "Tidak terdeteksi gangguan tidur."
+        )
+
+    elif result == "Insomnia":
+        st.warning(
+            "Terindikasi mengalami Insomnia."
+        )
+
+    elif result == "Sleep Apnea":
+        st.error(
+            "Terindikasi mengalami Sleep Apnea."
+        )
 
