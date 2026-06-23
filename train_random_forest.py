@@ -23,10 +23,13 @@ import seaborn as sns
 
 print("===== IMPORT DATASET =====")
 
-df = pd.read_csv("Sleep_health_and_lifestyle_dataset.csv")
-
+df = pd.read_csv(
+    "Sleep_health_and_lifestyle_dataset.csv",
+    keep_default_na=False
+)
 print("Jumlah data:", df.shape)
-
+print("\n===== CEK TARGET =====")
+print(df["Sleep Disorder"].value_counts(dropna=False))
 
 # 3. PREPROCESSING SINGKAT
 
@@ -48,17 +51,19 @@ df = df.drop(columns=['Blood Pressure'])
 df = df.dropna()
 
 # Encoding
-le = LabelEncoder()
+gender_encoder = LabelEncoder()
+bmi_encoder = LabelEncoder()
+target_encoder = LabelEncoder()
 
-categorical_columns = [
-    'Gender',
-    'Occupation',
-    'BMI Category',
-    'Sleep Disorder'
-]
+df['Gender'] = gender_encoder.fit_transform(df['Gender'])
 
-for col in categorical_columns:
-    df[col] = le.fit_transform(df[col])
+df['BMI Category'] = bmi_encoder.fit_transform(
+    df['BMI Category']
+)
+
+df['Sleep Disorder'] = target_encoder.fit_transform(
+    df['Sleep Disorder']
+)
 
 print("Preprocessing selesai")
 
@@ -180,11 +185,33 @@ print("confusion_matrix.png")
 
 print("\n===== SIMPAN MODEL =====")
 
+# Simpan model Random Forest
 with open("random_forest_model.pkl", "wb") as file:
     pickle.dump(rf_model, file)
 
+# Simpan scaler
+with open("scaler.pkl", "wb") as file:
+    pickle.dump(scaler, file)
+
+# Simpan encoder Gender
+with open("gender_encoder.pkl", "wb") as file:
+    pickle.dump(gender_encoder, file)
+
+# Simpan encoder BMI Category
+with open("bmi_encoder.pkl", "wb") as file:
+    pickle.dump(bmi_encoder, file)
+
+# Simpan encoder Target
+with open("target_encoder.pkl", "wb") as file:
+    pickle.dump(target_encoder, file)
+
 print("Model berhasil disimpan")
-print("Nama file: random_forest_model.pkl")
+print("Nama file:")
+print("- random_forest_model.pkl")
+print("- scaler.pkl")
+print("- gender_encoder.pkl")
+print("- bmi_encoder.pkl")
+print("- target_encoder.pkl")
 
 
 # 13. FEATURE IMPORTANCE
@@ -232,3 +259,4 @@ print("feature_importance.png")
 # ============================================
 
 print("\nCheckpoint 4 selesai")
+print(target_encoder.classes_)
