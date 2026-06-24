@@ -32,7 +32,6 @@ st.write(
 )
 
 st.write("Model : Random Forest")
-st.write("Accuracy : 96%")
 
 st.info(
     """
@@ -73,17 +72,15 @@ if menu == "About":
         "Random Forest Classifier"
     )
 
-    st.subheader("Model Accuracy")
-
-    st.write(
-        "96%"
-    )
-
 elif menu == "Developer":
 
     st.title("Developer Profile")
 
     st.write("Nama : Kelompok 11")
+
+    st.write("Nama : Stevano Imanuel Panjaitan (412024015)")
+
+    st.write("Nama : Leonard Francois (412024035)")
 
     st.write("Program Studi : Rekayasa Perangkat Lunak")
 
