@@ -76,21 +76,24 @@ elif menu == "Developer":
 
     st.title("Developer Profile")
 
-    st.write("Nama : Kelompok 11")
+    st.subheader("Kelompok 11")
 
-    st.write("Nama : Stevano Imanuel Panjaitan (412024015)")
+    st.write("**Anggota Kelompok:**")
 
-    st.write("Nama : Leonard Francois (412024035)")
+    st.write("• Stevano Imanuel Panjaitan (412024015)")
+    st.write("• Leonard Francois (412024035)")
 
-    st.write("Program Studi : Rekayasa Perangkat Lunak")
+    st.write("")
 
-    st.write("Mata Kuliah : Artificial Intelligence")
+    st.write("**Fakultas:** Teknologi Cerdas")
+    st.write("**Mata Kuliah:** Kecerdasan Tiruan")
 
     st.write(
-        "Aplikasi ini dibuat untuk memenuhi "
-        "tugas UAS Artificial Intelligence."
+        """
+        Aplikasi ini dibuat untuk memenuhi
+        tugas UAS mata kuliah Kecerdasan Tiruan.
+        """
     )
-
 if menu == "Home":
 
  st.subheader("Input Data")
